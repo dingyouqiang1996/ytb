@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: yt-dlp-1080p-
+spec:
+    
+  template:
+    spec:
+      containers:
+      - name: yt-dlp
+        image: yt-dlp:v2
+        command: ["yt-dlp",  "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best", "https://youtu.be/kOAaj6ydqKo"]
+        volumeMounts:
+        - name: nfs
+          mountPath: /app
+      volumes:
+      - name: nfs
+        nfs:
+          server: 192.168.0.40
+          path: "/volume1/nas2T/板桥_2025_09_22/Youtube/"
+      restartPolicy: Never
+
